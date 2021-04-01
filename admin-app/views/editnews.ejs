@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Admin Home</title>
+    </head>
+    <body>
+        <%-include ("./partials/navbar"); %>
+        
+        <div class="container" style="align-items: center;">
+            <div class="alert alert-success">
+                Username: <%= username %> , Email: <%= email %>
+            </div>
+            <h1 style="text-align: center;">News List</h1>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped" id="myTable">
+                    <thead class="tdhead-dark">
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Published At</th>
+                            <th>Edit/Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i < newsList.length; i++) { %>
+                            <tr>
+                                <td><%= newsList[i].title %></td>
+                                <td><%= newsList[i].description %></td>
+                                <td><%= newsList[i].publish_date %></td>
+                                <td>
+                                    <form method="POST" action="http://localhost:3000/news/edit">
+                                        <input type="hidden" name="_id" value="<%= newsList[i]._id %>">
+                                        <button class="btn btn-primary" type="submit">Edit</button>
+                                    </form>
+                                    <form method="POST" action="http://localhost:3000/news/delete">
+                                        <input type="hidden" name="_id" value="<%= newsList[i]._id %>">
+                                        <button class="btn btn-secondary" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+    </body>
+</html>
